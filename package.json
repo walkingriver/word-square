@@ -1,0 +1,22 @@
+{
+  "name": "SquareWordGridsSource",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc --skipLibCheck --inlineSources false -p tsconfig.json",
+    "debug": "ts-node --inspect ./src/server.ts | bunyan",
+    "debug:live": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ./node_modules/.bin/ts-node -- --inspect ./src/server.ts | bunyan",
+    "test": "nyc -r lcov -e .ts -x \"*.spec.ts\" jasmine-ts --config=jasmine.json",
+    "test:live": "nodemon --watch src --ext ts --exec ./node_modules/.bin/jasmine-ts --config=jasmine.json",
+    "lint": "tslint --project tslint.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "typescript": "^3.1.6"
+  }
+}
