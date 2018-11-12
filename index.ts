@@ -1,14 +1,26 @@
 
-import { words } from './test-words';
+import { words } from './words-4-all';
+// import { words } from './test-words';
+// import { words } from './new-4';
 
 console.log('Loaded words list: ', words.length);
 
-findWords(0, [
-  ['W', '', '', ''],
-  ['', '', '', ''],
-  ['', '', '', ''],
-  ['', '', '', '']
-]);
+const letters = 'abcdefghijklmnopqrstuvwxyz';
+letters.split('').forEach((char) => {
+  findWords(0, [
+    [char, '', '', ''],
+    ['', '', '', ''],
+    ['', '', '', ''],
+    ['', '', '', '']
+  ]);
+});
+
+// findWords(0, [
+//   ['b', '', '', ''],
+//   ['', '', '', ''],
+//   ['', '', '', ''],
+//   ['', '', '', '']
+// ]);
 
 function findWords(depth: number, words: string[][]): boolean {
   // If we reach the point where our search depth is our array size, we're done!
@@ -17,7 +29,7 @@ function findWords(depth: number, words: string[][]): boolean {
   // I need to make a copy of input, so I dont corrupt the one
   // being passed in.
   let input = JSON.parse(JSON.stringify(words));
-  console.log(input);
+  // console.log(input);
 
   let constraintX = input[depth].join('');
   let constraintY = '';
@@ -46,7 +58,8 @@ function findWords(depth: number, words: string[][]): boolean {
 
       // We recurse a little deeper.
       if (findWords(depth + 1, input)) {
-        console.log('SUCCESS!', input);
+        // console.log('SUCCESS!', input);
+        console.log(makePuzzle(input));
       }
     }
   }
@@ -55,10 +68,39 @@ function findWords(depth: number, words: string[][]): boolean {
 }
 
 function getWords(start: string): string[] {
-  console.log('Looking for words starting with ', start)
+  // console.log('Looking for words starting with ', start)
   const pattern = '^' + start;
   return words.filter((v) => {
     return v.match(pattern);
   });
 }
 
+function makePuzzle(input: string[][]): string {
+  let puzzle = {
+    size: 0,
+    solution: []
+  };
+  solution: ([].concat.apply([], input)).join('')
+  let solution1 = '';
+  let solution2 = '';
+
+  for (let i = 0; i < input.length; i++) {
+    const row = input[i];
+    for (let j = 0; j < row.length; j++) {
+      solution1 += input[i][j];
+      solution2 += input[j][i];
+    }
+  }
+
+  if (solution1 === solution2) {
+    // It's a true word square
+    puzzle.size = input.length;
+    puzzle.solution = [solution1];
+  } else {
+    // It's not a true square
+    puzzle.size = input.length * 2;
+    puzzle.solution = [solution1, solution2];
+  }
+
+  return JSON.stringify(puzzle);
+}

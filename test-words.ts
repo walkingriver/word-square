@@ -1,10 +1,10 @@
 export const words = [
-  'ACID',
-  'EDGE',
-  'FINE',
-  'ICON',
-  'KNEE',
-  'LONG',
-  'WALK',
-  'WIFE'
+  'acid',
+  'edge',
+  'fine',
+  'icon',
+  'knee',
+  'long',
+  'walk',
+  'wife'
 ];
