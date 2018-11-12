@@ -5,15 +5,24 @@ import { words } from './words-4-all';
 
 console.log('Loaded words list: ', words.length);
 
-const letters = 'abcdefghijklmnopqrstuvwxyz';
-letters.split('').forEach((char) => {
-  findWords(0, [
-    [char, '', '', ''],
-    ['', '', '', ''],
-    ['', '', '', ''],
-    ['', '', '', '']
-  ]);
+words.forEach(word => {
+    findWords(0, [
+      [word[0], word[1], word[2], word[3]],
+      ['', '', '', ''],
+      ['', '', '', ''],
+      ['', '', '', '']
+    ]);
 });
+
+// const letters = 'abcdefghijklmnopqrstuvwxyz';
+// letters.split('').forEach((char) => {
+//   findWords(0, [
+//     [char, '', '', ''],
+//     ['', '', '', ''],
+//     ['', '', '', ''],
+//     ['', '', '', '']
+//   ]);
+// });
 
 // findWords(0, [
 //   ['b', '', '', ''],
