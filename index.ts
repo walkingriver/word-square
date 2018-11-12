@@ -3,11 +3,6 @@ import { words } from './test-words';
 
 console.log('Loaded words list: ', words.length);
 
-const bWords = (getWords('b'));
-
-// Grab first word
-const word = bWords[0];
-
 findWords(0, [
   ['W', '', '', ''],
   ['', '', '', ''],
@@ -15,41 +10,52 @@ findWords(0, [
   ['', '', '', '']
 ]);
 
-function findWords(depth: number, input: string[][]): string[] {
+function findWords(depth: number, words: string[][]): boolean {
+  // If we reach the point where our search depth is our array size, we're done!
+  if (depth == words.length) { return true; }
+
+  // I need to make a copy of input, so I dont corrupt the one
+  // being passed in.
+  let input = JSON.parse(JSON.stringify(words));
   console.log(input);
 
-  let constraintX = ''
-  let constraintY = ''
+  let constraintX = input[depth].join('');
+  let constraintY = '';
 
-  for (let i = 0; i< depth; i++) {constraintX += words[0][i]};
-  for (let i = 0; i< depth; i++) {constraintY += words[i][0]};
-  const nextRows = getWords(constraintX);
-  
-  if (nextRows.length) {
-    nextRows.forEach((r) => {
-      input[depth] = r.split('');
-      const nextCols = getWords(constraintY);
-      if (nextCols.length) {
-        nextCols.forEach((c) => {
-          // Set the input's "depth" column to the word          
-          for (let i = 0; i < c.length; i++) {
-            input[depth][i] = c[i];
-          }
+  const rowWords = getWords(constraintX);
 
-          // And pass the new square into the function with a new depth
-          const potential = findWords(depth + 1, input);
-          if (potential.length && potential.length === depth) {
-            console.log('SUCCESS!', potential);
-          }
-        });
+  // Try each word... 
+  for (let j = 0; j < rowWords.length; j++) {
+    const r = rowWords[j];
+
+    // ...on the "depth" row
+    input[depth] = r.split('');
+
+    // The next search pattern is the list of letters in the "depth" column
+    constraintY = '';
+    for (let i = 0; i < r.length; i++) { constraintY += input[i][depth] };
+
+    // Get all potential words for this column
+    const colWords = getWords(constraintY);
+
+    // Try each word as "depth" column
+    for (let k = 0; k < colWords.length; k++) {
+      let c = colWords[k];
+      // Set the input's "depth" column to the word          
+      for (let l = 0; l < c.length; l++) { input[l][depth] = c[l]; }
+
+      // We recurse a little deeper.
+      if (findWords(depth + 1, input)) {
+        console.log('SUCCESS!', input);
       }
-    });
+    }
   }
 
-  return [];
+  return false;
 }
 
 function getWords(start: string): string[] {
+  console.log('Looking for words starting with ', start)
   const pattern = '^' + start;
   return words.filter((v) => {
     return v.match(pattern);
