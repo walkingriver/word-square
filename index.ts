@@ -1,5 +1,5 @@
 
-import { words } from './words-4-all';
+import { words } from './words-3';
 // import { words } from './test-words';
 // import { words } from './new-4';
 
@@ -7,8 +7,7 @@ console.log('Loaded words list: ', words.length);
 
 words.forEach(word => {
     findWords(0, [
-      [word[0], word[1], word[2], word[3]],
-      ['', '', '', ''],
+      [word[0], word[1], word[2]],
       ['', '', '', ''],
       ['', '', '', '']
     ]);
