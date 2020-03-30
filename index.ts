@@ -1,34 +1,54 @@
 
-import { words } from './words-3';
+// import { words } from './words-3';
 // import { words } from './test-words';
 // import { words } from './new-4';
+import { words } from './words-5-disney';
 
-console.log('Loaded words list: ', words.length);
+const wordLength = words[0].length;
 
-words.forEach(word => {
-    findWords(0, [
-      [word[0], word[1], word[2]],
-      ['', '', '', ''],
-      ['', '', '', '']
-    ]);
-});
+console.log(`Loaded ${words.length} words of ${wordLength} characters.`);
 
-// const letters = 'abcdefghijklmnopqrstuvwxyz';
-// letters.split('').forEach((char) => {
-//   findWords(0, [
-//     [char, '', '', ''],
-//     ['', '', '', ''],
-//     ['', '', '', ''],
-//     ['', '', '', '']
-//   ]);
-// });
+switch (wordLength) {
+  case (3):
+    words.forEach(word => {
+      findWords(0, [
+        [word[0], word[1], word[2]],
+        ['', '', '', '', ''],
+        ['', '', '', '', '']
+      ]);
+    });
+    break;
 
-// findWords(0, [
-//   ['b', '', '', ''],
-//   ['', '', '', ''],
-//   ['', '', '', ''],
-//   ['', '', '', '']
-// ]);
+  case (4):
+    words.forEach(word => {
+      findWords(0, [
+        [word[0], word[1], word[2], word[3]],
+        ['', '', '', '', ''],
+        ['', '', '', '', ''],
+        ['', '', '', '', '']
+      ]);
+    });
+    break;
+    
+    case (5):
+      words.forEach(word => {
+        findWords(0, [
+          [word[0], word[1], word[2], word[3], word[4]],
+          ['', '', '', '', '', ''],
+          ['', '', '', '', '', ''],
+          ['', '', '', '', '', ''],
+          ['', '', '', '', '', '']
+        ]);
+      });
+      break;
+
+  default:
+    console.log(`Unsupported word length: ${wordLength}`);
+    break;
+}
+
+console.log('Process complete.');
+
 
 function findWords(depth: number, words: string[][]): boolean {
   // If we reach the point where our search depth is our array size, we're done!
